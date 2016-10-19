@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="StyleTable.css">
+    <title>Sky</title>
+
+    <script>
+        var btnArr;
+        var myInterval;
+        var curDiv;
+        var rainDiv;
+        var cloudDiv;
+        window.onload = function(){
+            curDiv = document.getElementById("myDiv");
+            rainDiv = document.getElementById("rainDiv");
+            cloudDiv = document.getElementById("cloudDiv");
+            btnArr = document.getElementsByClassName("myBtns");
+            for(var i=0; i<btnArr.length;i++){
+                btnArr[i].onclick = changeDir;
+            }
+            curDiv.width = "256px";
+            curDiv.heigth = "256px";
+            curDiv.style.top = "10px";
+            curDiv.style.left = "10px";
+        };
+        function changeDir(){
+            var newDir = this.id;
+            if(myInterval){
+                clearInterval(myInterval);
+            }
+            myInterval = undefined;
+            var startPos = 0;
+            var stopPos = 0;
+            switch(newDir){
+                case "leftBtn":
+                    //startPos = curDiv.style.left;
+                    startPos = parseInt(curDiv.style.left);
+                    stopPos = 0 ;
+                    myInterval = setInterval(function(){
+                        startPos -= 3;
+                        curDiv.style.left = startPos+"px";
+                        checkForRain();
+                        if(startPos<=stopPos){ clearInterval(myInterval);}
+                    },20);
+                    break;
+                case "topBtn":
+                    startPos = parseInt(curDiv.style.top);
+                    stopPos = 0;
+                    myInterval = setInterval(function(){
+                        startPos -= 3;
+                        curDiv.style.top = startPos+"px";
+                        checkForRain();
+                        if(startPos<=stopPos){ clearInterval(myInterval);}
+                    },20);
+                    break;
+                case "rightBtn":
+                    startPos = parseInt(curDiv.style.left);
+                    stopPos = parseInt(document.documentElement.clientWidth)-parseInt(curDiv.width);
+                    myInterval = setInterval(function(){
+                        startPos += 3;
+                        curDiv.style.left = startPos+"px";
+                        checkForRain();
+                        if(startPos>=stopPos){ clearInterval(myInterval);}
+                    },20);
+                    break;
+                case "bottomBtn":
+                    startPos = parseInt(curDiv.style.top);
+                    stopPos = parseInt(document.documentElement.clientHeight)-parseInt(curDiv.heigth);
+                    myInterval = setInterval(function(){
+                        startPos += 3;
+                        curDiv.style.top = startPos+"px";
+                        checkForRain();
+                        if(startPos>=stopPos){ clearInterval(myInterval);}
+                    },20);
+                    break;
+            }
+        }
+
+        function checkForRain(){
+            var rainyDay = false;
+
+            var sunImgX = parseInt(curDiv.style.left);
+            var sunImgY = parseInt(curDiv.style.top);
+            console.log("Sun: "+sunImgX+" ; "+sunImgY);
+            var cloudImgX = parseInt(cloudDiv.offsetLeft);
+            var cloudImgY = parseInt(cloudDiv.offsetTop);
+            console.log("Cloud: "+cloudImgX+" ; "+cloudImgY);
+            rainyDay =  rainyDay || ((sunImgX > cloudImgX) && (sunImgY > cloudImgY)) ;
+
+            sunImgX = parseInt(curDiv.style.left) + parseInt(curDiv.clientWidth);
+            sunImgY = parseInt(curDiv.style.top) + parseInt(curDiv.clientHeight);
+            console.log("Sun: "+sunImgX+" ; "+sunImgY);
+            cloudImgX = parseInt(cloudDiv.offsetLeft) + parseInt(cloudDiv.clientWidth);
+            cloudImgY = parseInt(cloudDiv.offsetTop) + parseInt(cloudDiv.clientHeight);
+            console.log("Cloud: "+cloudImgX+" ; "+cloudImgY);
+            rainyDay =  rainyDay && ((sunImgX < cloudImgX) && (sunImgY < cloudImgY)) ;
+            console.log(rainyDay);
+            if(rainyDay){
+                rainDiv.style.display = "block";
+            }else{
+                rainDiv.style.display = "none";
+            }
+            return rainyDay;
+        }
+    </script>
+</head>
+<body>
+<div class="main">
+    <div id="myDiv">
+        <img id="sun" src="sun.png"/>
+    </div>
+    <button id="leftBtn" class="myBtns">Left</button>
+    <button id="topBtn" class="myBtns">Top</button>
+    <button id="rightBtn" class="myBtns">Right</button>
+    <button id="bottomBtn" class="myBtns">Bottom</button>
+    <div id="weatherDiv">
+        <div id="cloudDiv">
+            <img id="cloud" src="cloud.png"/>
+        </div>
+        <div id="rainDiv">
+            <img id="rain" src="rain.gif"/>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

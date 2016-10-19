@@ -1,0 +1,101 @@
+body {
+    background-image: url(sky.png);
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+    min-height: 100%;
+    margin: 0;
+    overflow: hidden;
+    font-family: lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 32px;
+}
+
+#myDiv{
+    width: 256px;
+    height: 256px;
+    float: left;
+    border: none;
+    display: block;
+    position: absolute;
+    z-index: 1;
+}
+.main{
+    display: block;
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
+.myBtns{
+    display: block;
+    position: absolute;
+    background-color: white;
+    border: none;
+    width: 50px;
+    height: 30px;
+    margin: 20px;
+    z-index: 99;
+}
+
+
+#leftBtn{
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+
+}
+
+#topBtn{
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+}
+
+#rightBtn{
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+
+
+}
+
+#bottomBtn {
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+
+#cloudDiv{
+    width: 50%;
+    height: 100%;
+    top: 40%;
+    left: 40%;
+    display: block;
+    position: relative;
+    z-index: 6;
+}
+#cloud{
+    width: 100%;
+    z-index: 6;
+}
+
+#rainDiv{
+    display: none;
+    position: relative;
+    left: 48%;
+    width: 43%;
+    z-index: 3;
+}
+#rain{
+    width: 80%;
+    z-index: 3;
+}
